@@ -262,3 +262,81 @@ ORDER BY daily_volatility DESC;
 <img width="377" height="514" alt="image" src="https://github.com/user-attachments/assets/909a894e-600a-4012-99cb-66c90eee6965" />
 
 
+# How do mutual fund categories perform on a monthly basis in terms of returns and volatility?
+
+After analyzing daily movements, we shifted to **monthly aggregation** to reduce noise and better reflect how investors typically evaluate mutual fund performance.
+
+## 🧮 Methodology
+
+- Daily NAV data was aggregated to **month-end NAV**
+- Monthly returns were calculated using **month-over-month NAV change**
+- Two key metrics were derived:
+    - **Average Monthly Return**
+    - **Monthly Volatility (Standard Deviation of Monthly Returns)**
+
+## 🔍 Key Observations
+
+### 🔵 Debt Categories
+
+- **Money Market, Liquid, Overnight, Short Duration** funds show:
+    - Higher average monthly returns
+    - Higher monthly volatility compared to other debt categories
+- This reflects **interest rate sensitivity** and short-term rate movements.
+- Despite being considered “safe”, these funds are **not volatility-free** in the short term.
+
+### 🟢 Equity Categories
+
+- Equity categories (Large Cap, Mid Cap, Small Cap, Flexi Cap):
+    - Show **moderate monthly returns**
+    - Much **lower volatility than daily analysis suggested**
+- Monthly aggregation smooths out daily market noise and reflects **true trend-based performance**.
+
+### 🟣 Hybrid & Arbitrage Funds
+
+- **Arbitrage and Conservative Hybrid** funds exhibit:
+    - Very low monthly volatility
+    - Stable but lower monthly returns
+- These categories are suitable for **capital preservation-focused investors**.
+
+### ⚠️ Other – Unclassified
+
+- Still shows irregular behavior
+- Indicates mixed or inconsistent schemes
+- Less reliable for structured long-term analysis
+
+## 🎯 Key Takeaway
+
+Monthly analysis provides a **more realistic performance view** than daily analysis.
+
+Debt funds may appear volatile daily, but monthly results confirm their **relative stability**, while equity funds demonstrate **controlled risk with consistent growth patterns**.
+
+This step bridges short-term volatility analysis with long-term investment decision-making.
+
+
+```SQL
+WITH monthly_nav AS (
+    SELECT scheme_code, mutual_fund_category, DATE_TRUNC('month', nav_date) AS month,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code, DATE_TRUNC('month', nav_date) ORDER BY nav_date DESC) AS month_end_nav
+    FROM mutual_fund_nav
+),
+monthly_returns AS (
+    SELECT scheme_code, mutual_fund_category, month,
+        (month_end_nav - LAG(month_end_nav) OVER (
+            PARTITION BY scheme_code ORDER BY month
+        )) / NULLIF(
+            LAG(month_end_nav) OVER (
+                PARTITION BY scheme_code ORDER BY month
+            ), 0
+        ) AS monthly_return
+    FROM monthly_nav
+)
+SELECT mutual_fund_category, ROUND(AVG(monthly_return), 6) AS avg_monthly_return, 
+ROUND(STDDEV(monthly_return), 6) AS monthly_volatility
+FROM monthly_returns
+WHERE monthly_return IS NOT NULL
+GROUP BY mutual_fund_category
+ORDER BY monthly_volatility DESC;
+```
+<img width="541" height="567" alt="image" src="https://github.com/user-attachments/assets/22bdbc63-6011-4164-89e2-7ad280669138" />
+<img width="543" height="518" alt="image" src="https://github.com/user-attachments/assets/919e2015-c3b7-42b3-ae54-a582d7a9edd6" />
+
