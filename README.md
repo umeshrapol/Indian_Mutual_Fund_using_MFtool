@@ -43,7 +43,7 @@ The analysis is primarily based on the following attributes:
 These fields are sufficient to evaluate **returns, growth trends, volatility, and consistency** of mutual fund performance.
 
 ---
-## 🔍 Analysis Question 1: Mutual Fund Category Distribution
+## 🔍 Mutual Fund Category Distribution
 
 ### Question
 How many mutual fund schemes are available in each category such as Large Cap, Mid Cap, Small Cap, Debt, and other categories?
@@ -58,7 +58,7 @@ Before analyzing performance, it is important to understand how mutual funds are
 
 This analysis forms the foundation for further category-wise performance analysis.
 
-## 🔍 Analysis Question 1: Mutual Fund Category and Scheme Count
+## 🔍 Mutual Fund Category and Scheme Count
 
 ### Objective
 The objective of this analysis is to identify the types of mutual fund categories present in the dataset and determine how many schemes belong to each category.
@@ -78,11 +78,6 @@ The category-wise distribution highlights the diversity of the Indian mutual fun
 
 ---
 
-## 🔹 STEP 3: Paste YOUR CODE (READY TO COPY)
-
-Just copy **everything below** and paste it into `README.md`:
-
-```markdown
 ```sql
 SELECT
     CASE
@@ -170,7 +165,7 @@ ORDER BY total_schemes DESC;
 <img width="381" height="568" alt="image" src="https://github.com/user-attachments/assets/4810c004-f6f3-42c1-b2dd-8395e5ff4d90" />
 
 
-## 🔍 Analysis Question 2: Average Daily Performance by Category
+## 🔍 Average Daily Performance by Category
 
 ### Objective
 To compare the average daily performance of different mutual fund categories using historical NAV day-on-day changes.
@@ -191,6 +186,9 @@ ORDER BY avg_daily_return DESC;
 ```
 <img width="397" height="566" alt="image" src="https://github.com/user-attachments/assets/eb3c53b9-437b-4c5d-b6b4-196674f5363d" />
 <img width="395" height="515" alt="image" src="https://github.com/user-attachments/assets/66e0de67-402b-4173-a16b-0e1eaa95c196" />
+
+
+
 Key Insights
 
 Debt-oriented categories such as Money Market, Overnight, and Liquid funds show stable average daily returns.
