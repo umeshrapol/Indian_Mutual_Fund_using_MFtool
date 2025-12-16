@@ -1123,11 +1123,351 @@ ORDER BY performance_bucket, return_10yr_percent DESC;
 <img width="1262" height="310" alt="image" src="https://github.com/user-attachments/assets/21c65070-0f43-403f-871e-ac1b08d910f6" />
 
 
+## Q9: Which Equity Large Cap mutual funds performed the best and worst over the last 15 years?
+
+### Objective
+Identify top and bottom performing Equity Large Cap mutual funds over a 15-year horizon to evaluate long-term wealth creation potential.
+
+### Methodology
+- Filtered data to Equity – Large Cap category
+- Calculated 15-year return (%) using NAV growth
+- Ranked schemes by cumulative return
+- Selected Top 5 and Bottom 5 performers
+- Assigned performance buckets (Top 5, Bottom 5)
+
+### Key Insights
+- Massive performance divergence exists even within Large Cap funds
+- Top performers delivered over 600% returns in 15 years
+- Bottom performers generated very low or negative returns
+- Highlights importance of fund-level selection, not just category exposure
+
+### Industry Relevance
+- Aligns with long-term investment and retirement planning analysis
+- Common evaluation method used by asset managers and institutional investors
+- Reinforces the role of active fund selection in Large Cap investing
+
+```SQL
+WITH fund_15yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Equity - Large Cap'
+      AND nav_date >= CURRENT_DATE - INTERVAL '15 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category,
+    ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_15yr_percent
+    FROM fund_15yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_15yr_percent DESC;
+```
+
+<img width="1037" height="307" alt="image" src="https://github.com/user-attachments/assets/7ea6ac43-fb6e-46da-a500-e23bad19a7fc" />
+
+
+## Q10: Which Equity Mid Cap mutual funds performed the best and worst over the last 15 years?
+
+### Objective
+Evaluate long-term performance of Equity Mid Cap mutual funds by identifying top and bottom performers over a 15-year period.
+
+### Methodology
+- Filtered data to Equity – Mid Cap category
+- Calculated 15-year return (%) using NAV growth
+- Ranked schemes based on cumulative returns
+- Selected Top 5 and Bottom 5 funds
+- Assigned performance buckets (Top 5, Bottom 5)
+
+### Key Insights
+- Equity Mid Cap funds exhibit extreme return dispersion
+- Top funds delivered 800%–1100%+ returns over 15 years
+- Bottom funds produced weak or negative returns
+- Highlights higher risk–reward nature of Mid Cap investing
+- Reinforces importance of fund-level selection
+
+### Industry Relevance
+- Aligns with long-term equity analysis practices
+- Useful for SIP planning, retirement modeling, and portfolio construction
+- Demonstrates why Mid Cap funds require careful monitoring and selection
+
+
+```SQL
+WITH fund_15yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Equity - Mid Cap'
+      AND nav_date >= CURRENT_DATE - INTERVAL '15 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category,
+    ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_15yr_percent
+    FROM fund_15yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_15yr_percent DESC;
+```
+
+<img width="923" height="311" alt="image" src="https://github.com/user-attachments/assets/05b8c032-0aa1-480c-9e82-1a87b440c005" />
+
+
+## Q11: Which Equity Small Cap mutual funds performed the best and worst over the last 15 years?
+
+### Objective
+Analyze long-term performance extremes within the Equity – Small Cap category over a 15-year horizon.
+
+### Methodology
+- Filtered data to Equity – Small Cap funds
+- Calculated 15-year return (%) using NAV growth
+- Ranked schemes based on cumulative returns
+- Selected Top 5 and Bottom 5 funds
+- Assigned performance buckets (Top 5, Bottom 5)
+
+### Key Insights
+- Equity Small Cap funds exhibit extreme long-term volatility in returns
+- Top performers generated 1300%–1500%+ returns
+- Bottom performers delivered negative returns even over 15 years
+- Highlights high-risk, high-reward nature of Small Cap investing
+- Strongly reinforces importance of fund-level selection
+
+### Industry Relevance
+- Aligns with long-term equity and small-cap investment analysis
+- Useful for aggressive portfolio construction and SIP strategies
+- Demonstrates downside risk of poor Small Cap fund selection
+
+```SQL
+WITH fund_15yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Equity - Small Cap'
+      AND nav_date >= CURRENT_DATE - INTERVAL '15 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category,
+    ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_15yr_percent
+    FROM fund_15yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_15yr_percent DESC;
+```
+<img width="1040" height="310" alt="image" src="https://github.com/user-attachments/assets/14a8c599-7f59-4381-823a-67d8eb9aa682" />
+
+
+## Q12: Which Equity Flexi Cap mutual funds performed the best and worst over the last 15 years?
+
+### Objective
+Identify long-term top and bottom performers within the Equity – Flexi Cap category over a 15-year horizon.
+
+### Methodology
+- Filtered data to Equity – Flexi Cap funds
+- Calculated 15-year return (%) using NAV growth
+- Ranked schemes by cumulative returns
+- Selected Top 5 and Bottom 5 funds
+- Assigned performance buckets (Top 5, Bottom 5)
+
+### Key Insights
+- Flexi Cap funds exhibit significant performance dispersion
+- Top funds delivered 650%–850%+ returns over 15 years
+- Bottom funds showed near-zero or negative returns
+- Demonstrates that flexibility alone does not ensure performance
+- Fund manager decisions play a critical role
+
+### Industry Relevance
+- Mirrors professional Flexi Cap fund evaluation practices
+- Useful for balanced and long-term portfolio construction
+- Highlights importance of fund-level selection over category-level choice
+
+
+```SQL
+WITH fund_15yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Equity - Flexi Cap'
+      AND nav_date >= CURRENT_DATE - INTERVAL '15 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category,
+    ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_15yr_percent
+    FROM fund_15yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_15yr_percent DESC;
+```
+
+<img width="973" height="315" alt="image" src="https://github.com/user-attachments/assets/b03be275-b792-451f-a93b-4fd12b979fb4" />
 
 
 
+## Q13: Which Debt Liquid mutual funds performed the best and worst over the last 15 years?
+
+### Objective
+Evaluate long-term performance variation within the Debt – Liquid category over a 15-year horizon.
+
+### Methodology
+- Filtered data to Debt – Liquid funds
+- Calculated 15-year return (%) using NAV growth
+- Ranked schemes by cumulative returns
+- Selected Top 5 and Bottom 5 funds
+- Assigned performance buckets (Top 5, Bottom 5)
+
+### Key Insights
+- Liquid funds exhibit extreme return divergence over long horizons
+- Top funds show 27,000%+ returns due to long-term compounding
+- Bottom funds reflect fund closures, IDCW payouts, or unclaimed redemptions
+- Absolute long-term returns are misleading for liquid funds
+
+### Industry Relevance
+- Confirms that liquid funds are not designed for long-term return comparison
+- Used primarily for liquidity management and short-term parking
+- Reinforces importance of context-aware performance evaluation
+
+```SQL
+WITH fund_15yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Debt - Liquid'
+      AND nav_date >= CURRENT_DATE - INTERVAL '15 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category,
+    ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_15yr_percent
+    FROM fund_15yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_15yr_percent DESC;
+```
+
+<img width="1090" height="310" alt="image" src="https://github.com/user-attachments/assets/75404302-c0ac-4bae-8687-d66ff547e048" />
 
 
+## Q14: Which Debt Corporate Bond mutual funds performed the best and worst over the last 15 years?
+
+### Objective
+Analyze long-term performance dispersion within the Debt – Corporate Bond category over a 15-year horizon.
+
+### Methodology
+- Filtered data to Debt – Corporate Bond funds
+- Calculated 15-year return (%) using NAV growth
+- Ranked schemes based on cumulative returns
+- Selected Top 5 and Bottom 5 funds
+- Assigned performance buckets (Top 5, Bottom 5)
+
+### Key Insights
+- Corporate bond funds show strong long-term compounding effects
+- Top performers delivered 19,000%–34,000%+ returns
+- Bottom performers largely reflect IDCW and payout-based plans
+- Growth plan selection significantly impacts long-term outcomes
+
+### Industry Relevance
+- Mirrors long-term corporate bond fund evaluation methods
+- Highlights importance of reinvestment in debt instruments
+- Useful for fixed-income portfolio construction decisions
+
+```SQL
+WITH fund_15yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Debt - Corporate Bond'
+      AND nav_date >= CURRENT_DATE - INTERVAL '15 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category,
+    ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_15yr_percent
+    FROM fund_15yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_15yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_15yr_percent DESC;
+```
+
+<img width="1180" height="310" alt="image" src="https://github.com/user-attachments/assets/1e806769-77ea-43c8-b501-fe48231555c7" />
 
 
 
