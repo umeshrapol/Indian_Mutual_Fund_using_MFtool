@@ -202,3 +202,63 @@ Long-duration debt and gilt-based funds show comparatively lower average daily r
 The analysis confirms that return behavior varies significantly across fund categories, reinforcing the importance of category-wise comparison.
 
 
+## 📊 Volatility Analysis by Mutual Fund Category
+
+###   **Which mutual fund categories are the most volatile?**
+
+To measure **risk and instability**, we calculated the **standard deviation of daily NAV changes (`day_change`)** for each mutual fund category.
+
+---
+
+### 📐 Why Daily Volatility?
+
+- Daily NAV movement captures **true market fluctuations**
+- Risk in finance is measured at the **most granular level**
+- Monthly aggregation can **hide short-term risk spikes**
+- Industry-standard risk metrics (**Volatility, Sharpe Ratio, VaR**) are **daily-based**
+
+---
+
+### 🔍 Key Insights from the Output
+
+#### 🟡 Other – Unclassified
+- Extremely high volatility  
+- Indicates **mixed or poorly classified schemes**  
+- Not suitable for **reliable risk analysis**
+
+#### 🔵 Debt Categories (Surprisingly Volatile)
+- **Liquid, Overnight, Money Market** funds show higher daily volatility than expected  
+- Reason: very small NAV changes but **high frequency**, which increases standard deviation  
+- **Key insight:** Low return does **not** always mean low volatility
+
+#### 🟢 Equity Categories
+- Observed volatility pattern:  
+  **Mid Cap > Flexi Cap > Large Cap**
+- Matches real-world risk hierarchy:
+  - Mid & Small Caps are **more sensitive** to market movements
+  - Large Caps are **relatively stable**
+
+#### 🟣 Hybrid & Arbitrage Funds
+- Lowest volatility across categories  
+- Suitable for **low-risk investors**  
+- Confirms **industry positioning** of these products
+
+---
+
+### 🎯 Takeaway
+Daily volatility provides a clearer and more accurate view of **short-term risk** across mutual fund categories.  
+Debt funds can still exhibit noticeable daily volatility, while hybrid and arbitrage funds remain the most stable options.
+
+```sql
+
+SELECT
+    mutual_fund_category,
+    ROUND(STDDEV(day_change), 6) AS daily_volatility
+FROM mutual_fund_nav
+GROUP BY mutual_fund_category
+ORDER BY daily_volatility DESC;
+```
+<img width="381" height="568" alt="image" src="https://github.com/user-attachments/assets/5e44a16a-e5d2-4584-982e-ba4667c4b212" />
+<img width="377" height="514" alt="image" src="https://github.com/user-attachments/assets/909a894e-600a-4012-99cb-66c90eee6965" />
+
+
