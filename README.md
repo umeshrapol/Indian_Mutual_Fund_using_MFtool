@@ -159,6 +159,7 @@ SELECT
 FROM mutual_fund_nav
 GROUP BY mutual_fund_category
 ORDER BY total_schemes DESC;
+```
 
 
 
