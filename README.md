@@ -340,3 +340,395 @@ ORDER BY monthly_volatility DESC;
 <img width="541" height="567" alt="image" src="https://github.com/user-attachments/assets/22bdbc63-6011-4164-89e2-7ad280669138" />
 <img width="543" height="518" alt="image" src="https://github.com/user-attachments/assets/919e2015-c3b7-42b3-ae54-a582d7a9edd6" />
 
+# **Which Equity Large Cap mutual funds performed the best and worst over the last 5 years?**
+
+## 🎯 Objective
+
+To identify **top-performing** and **underperforming** Large Cap mutual funds over a **5-year investment horizon**, helping investors understand long-term performance dispersion within the same category.
+
+## 🧮 Methodology
+
+- Filtered data to **Equity – Large Cap** category only
+- Calculated **5-year return (%)** using NAV growth over a 5-year period
+- Ranked schemes based on returns
+- Selected:
+    - **Top 5** schemes with highest 5-year returns
+    - **Bottom 5** schemes with lowest 5-year returns
+- Labeled each scheme using a **performance bucket** (`Top 5`, `Bottom 5`)
+
+## 🔍 Key Insights
+
+- There is a **huge performance gap** within the same category
+- Top performers delivered **150%+ returns**, while bottom performers showed **very low or negative returns**
+- Category-level averages can hide **fund-level underperformance**
+- Reinforces why **fund selection matters**, not just category selection
+
+## 🧠 Industry Relevance
+
+- Mirrors how **AMC analysts and portfolio managers** evaluate funds
+- Common approach used in **long-term wealth creation analysis**
+- Useful for:
+    - Investment screening
+    - Risk-adjusted decision making
+    - Comparing active fund management effectiveness
+
+```SQL
+WITH fund_5yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Equity - Large Cap'
+      AND nav_date >= CURRENT_DATE - INTERVAL '5 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category, ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_5yr_percent
+    FROM fund_5yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_5yr_percent DESC;
+```
+<img width="1084" height="310" alt="image" src="https://github.com/user-attachments/assets/58d63a1d-5762-4e82-9c98-20ef0a743acf" />
+
+# Q6: **Which Equity Mid Cap mutual funds performed the best and worst over the last 5 years?**
+
+## 🎯 Objective
+
+To identify **top-performing** and **underperforming** Equity Mid Cap mutual funds over a **5 year investment horizon**, highlighting the performance spread within the Mid Cap category.
+
+## 🧮 Methodology
+
+- Filtered data to **Equity  Mid Cap** category only
+- Calculated **5 year return (%)** using NAV growth over the last 5 years
+- Ranked schemes based on their 5 year returns
+- Selected:
+    - **Top 5** funds with the highest 5 year returns
+    - **Bottom 5** funds with the lowest 5 year returns
+- Assigned a **performance bucket** (`Top 5`, `Bottom 5`) for clear comparison
+
+## 🔍 Key Insights
+
+- Even within the **Mid Cap category**, performance varies significantly
+- Top performers delivered **200%+ returns** over 5 years
+- Bottom performers showed **negative or very low returns**
+- This proves that **category selection alone is not sufficient**
+- Individual **fund selection plays a critical role** in long-term wealth creation
+
+## 🧠 Industry Relevance
+
+- Reflects how **fund houses and analysts** evaluate mid-cap schemes
+- Common approach in **long-term equity performance analysis**
+- Helps investors:
+    - Identify consistent performers
+    - Avoid long-term underperformers
+    - Make data-backed investment decisions
+```SQL
+WITH fund_5yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Equity - Mid Cap'
+      AND nav_date >= CURRENT_DATE - INTERVAL '5 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category, ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_5yr_percent
+    FROM fund_5yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_5yr_percent DESC;
+```
+<img width="1075" height="311" alt="image" src="https://github.com/user-attachments/assets/c62a9fbe-ca51-421b-8b05-8d06a9d37228" />
+
+# Q7: **Which Equity Small Cap mutual funds performed the best and worst over the last 5 years?**
+
+## 🎯 Objective
+
+To identify **top-performing** and **underperforming** Equity Small Cap mutual funds over a **5 year investment horizon**, highlighting the wide performance spread within the Small Cap category.
+
+## 🧮 Methodology
+
+- Filtered data to **Equity – Small Cap** category only  
+- Calculated **5 year return (%)** using NAV growth over the last 5 years  
+- Ranked schemes based on their 5 year returns  
+- Selected:
+  - **Top 5** funds with the highest 5 year returns  
+  - **Bottom 5** funds with the lowest 5 year returns  
+- Assigned a **performance bucket** (`Top 5`, `Bottom 5`) for easy comparison
+
+## 🔍 Key Insights
+
+- Equity Small Cap funds show **extreme performance dispersion**
+- Top performers delivered **250%–280%+ returns** over 5 years
+- Bottom performers posted **negative returns**, despite being in the same category
+- Highlights the **high-risk, high-reward nature** of Small Cap investing
+- Strongly reinforces that **fund selection is far more important than category selection**
+
+## 🧠 Industry Relevance
+
+- Reflects how **equity analysts and fund managers** assess Small Cap schemes
+- Commonly used in **long-term alpha generation analysis**
+- Demonstrates why Small Cap investments require:
+  - Longer holding periods
+  - Higher risk tolerance
+  - Careful fund screening
+```SQL
+WITH fund_5yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Equity - Small Cap'
+      AND nav_date >= CURRENT_DATE - INTERVAL '5 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category, ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_5yr_percent
+    FROM fund_5yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_5yr_percent DESC;
+```
+<img width="1027" height="307" alt="image" src="https://github.com/user-attachments/assets/844a1e76-a311-4617-bf33-a25e1558d96e" />
+
+
+# Q8: **Which Equity Flexi Cap mutual funds performed the best and worst over the last 5 years?**
+
+## 🎯 Objective
+
+To identify **top-performing** and **underperforming** Equity Flexi Cap mutual funds over a **5 year investment horizon**, highlighting performance variation within a flexible equity strategy.
+
+## 🧮 Methodology
+
+- Filtered data to **Equity – Flexi Cap** category only  
+- Calculated **5 year return (%)** using NAV growth over the last 5 years  
+- Ranked schemes based on their 5 year returns  
+- Selected:
+  - **Top 5** funds with the highest 5 year returns  
+  - **Bottom 5** funds with the lowest 5 year returns  
+- Assigned a **performance bucket** (`Top 5`, `Bottom 5`) for easy comparison
+
+## 🔍 Key Insights
+
+- Flexi Cap funds show **wide performance dispersion**, despite flexible mandates  
+- Top-performing Flexi Cap funds delivered **180%–200%+ returns** over 5 years  
+- Bottom performers generated **very low or near-flat returns**  
+- Flexibility in allocation does **not automatically guarantee superior performance**  
+- Fund manager strategy and timing play a **crucial role in long-term outcomes**
+
+## 🧠 Industry Relevance
+
+- Reflects how **actively managed Flexi Cap funds** are evaluated by analysts  
+- Commonly used in **long-term equity fund benchmarking**  
+- Highlights the importance of:
+  - Manager selection  
+  - Consistency across market cycles  
+  - Risk-aware allocation decisions  
+
+
+```SQL
+WITH fund_5yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Equity - Flexi Cap'
+      AND nav_date >= CURRENT_DATE - INTERVAL '5 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category, ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_5yr_percent
+    FROM fund_5yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_5yr_percent DESC;
+```
+<img width="962" height="314" alt="image" src="https://github.com/user-attachments/assets/a836b4af-ecbe-422e-9e91-12520bb39562" />
+
+# Q9: **Which Debt Liquid mutual funds performed the best and worst over the last 5 years?**
+
+## 🎯 Objective
+
+To identify **top-performing** and **underperforming** Debt Liquid mutual funds over a **5 year investment horizon**, and to understand long-term return behavior in a category generally considered low-risk.
+
+## 🧮 Methodology
+
+- Filtered data to **Debt – Liquid** category only  
+- Calculated **5 year return (%)** using NAV growth over the last 5 years  
+- Ranked schemes based on their 5 year returns  
+- Selected:
+  - **Top 5** funds with the highest 5 year returns  
+  - **Bottom 5** funds with the lowest 5 year returns  
+- Assigned a **performance bucket** (`Top 5`, `Bottom 5`) for direct comparison
+
+## 🔍 Key Insights
+
+- Liquid funds show **limited upside potential** even over long periods  
+- Top-performing Liquid funds delivered **~30%–34% returns** over 5 years  
+- Bottom performers show **extreme negative values**, largely due to:
+  - IDCW (Dividend payout) structure
+  - NAV resets after dividend distributions
+- This highlights that **return metrics must be interpreted carefully** for income-oriented funds
+
+## 🧠 Industry Relevance
+
+- Demonstrates why Liquid funds are used primarily for:
+  - Short-term parking of funds
+  - Liquidity management
+  - Capital preservation rather than wealth creation
+- Reinforces the importance of:
+  - Understanding fund structure (Growth vs IDCW)
+  - Using correct performance measures for debt instruments
+- Aligns with real-world practices followed by **treasury teams and fixed-income analysts**
+
+```SQL
+WITH fund_5yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Debt - Liquid'
+      AND nav_date >= CURRENT_DATE - INTERVAL '5 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category, ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_5yr_percent
+    FROM fund_5yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_5yr_percent DESC;
+```
+<img width="1086" height="310" alt="image" src="https://github.com/user-attachments/assets/fbc0bb9a-7db0-4a40-980c-079deaf5eef5" />
+
+# Q10: **Which Debt Corporate Bond mutual funds performed the best and worst over the last 5 years?**
+
+## 🎯 Objective
+
+To identify **top-performing** and **underperforming** Debt Corporate Bond mutual funds over a **5 year investment horizon**, and to evaluate long-term return consistency within the corporate bond category.
+
+## 🧮 Methodology
+
+- Filtered data to **Debt – Corporate Bond** category only  
+- Calculated **5 year return (%)** using NAV growth over the last 5 years  
+- Ranked schemes based on their 5 year returns  
+- Selected:
+  - **Top 5** funds with the highest 5 year returns  
+  - **Bottom 5** funds with the lowest 5 year returns  
+- Assigned a **performance bucket** (`Top 5`, `Bottom 5`) for comparison
+
+## 🔍 Key Insights
+
+- Corporate Bond funds show **moderate return potential** over long periods  
+- Top-performing funds delivered **~38%–40% returns** over 5 years  
+- Bottom performers reported **negative returns**, mainly due to:
+  - IDCW payout structures
+  - Credit events and interest rate cycles
+- Highlights that even within debt categories, **returns are not uniform**
+
+## 🧠 Industry Relevance
+
+- Reflects how **fixed-income analysts** assess credit-oriented debt funds  
+- Common approach in **bond portfolio performance evaluation**  
+- Reinforces the need to:
+  - Understand credit quality exposure  
+  - Differentiate between Growth and IDCW plans  
+  - Avoid relying only on category-level averages  
+
+```SQL
+WITH fund_5yr_returns AS (
+    SELECT DISTINCT scheme_code, scheme_name, mutual_fund_category,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date) AS start_nav,
+    FIRST_VALUE(nav) OVER (PARTITION BY scheme_code ORDER BY nav_date DESC) AS end_nav
+    FROM mutual_fund_nav
+    WHERE mutual_fund_category = 'Debt - Corporate Bond'
+      AND nav_date >= CURRENT_DATE - INTERVAL '5 years'
+),
+returns AS (
+    SELECT scheme_code, scheme_name, mutual_fund_category, ROUND(((end_nav / start_nav) - 1) * 100, 2) AS return_5yr_percent
+    FROM fund_5yr_returns
+    WHERE start_nav > 0
+)
+(
+    SELECT *, 'Top 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent DESC
+    LIMIT 5
+)
+UNION ALL
+(
+    SELECT *, 'Bottom 5' AS performance_bucket
+    FROM returns
+    ORDER BY return_5yr_percent ASC
+    LIMIT 5
+)
+ORDER BY performance_bucket, return_5yr_percent DESC;
+```
+<img width="1064" height="309" alt="image" src="https://github.com/user-attachments/assets/08e5122f-c297-4c8a-8fad-8823dd274829" />
+
+
+
+
+
+
