@@ -43,3 +43,17 @@ The analysis is primarily based on the following attributes:
 These fields are sufficient to evaluate **returns, growth trends, volatility, and consistency** of mutual fund performance.
 
 ---
+## 🔍 Analysis Question 1: Mutual Fund Category Distribution
+
+### Question
+How many mutual fund schemes are available in each category such as Large Cap, Mid Cap, Small Cap, Debt, and other categories?
+
+### Why this analysis is needed
+Before analyzing performance, it is important to understand how mutual funds are distributed across categories. Funds from different categories follow different investment strategies and risk levels, so comparisons should always be made within the same category.
+
+### What we expect to find
+- Total number of schemes in each category  
+- Categories with the highest and lowest number of funds  
+- Presence of niche categories such as Gold or Silver funds  
+
+This analysis forms the foundation for further category-wise performance analysis.
