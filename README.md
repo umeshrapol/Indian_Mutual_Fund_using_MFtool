@@ -160,6 +160,9 @@ FROM mutual_fund_nav
 GROUP BY mutual_fund_category
 ORDER BY total_schemes DESC;
 
+
+
+
 ---
 
 <img width="378" height="569" alt="image" src="https://github.com/user-attachments/assets/26540d0f-0c21-4465-a45d-4c25274d93a9" />
