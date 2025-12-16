@@ -170,4 +170,37 @@ ORDER BY total_schemes DESC;
 <img width="381" height="568" alt="image" src="https://github.com/user-attachments/assets/4810c004-f6f3-42c1-b2dd-8395e5ff4d90" />
 
 
+## 🔍 Analysis Question 2: Average Daily Performance by Category
+
+### Objective
+To compare the average daily performance of different mutual fund categories using historical NAV day-on-day changes.
+
+### Approach
+- Used `day_change` as a proxy for daily return.
+- Calculated average daily return for each mutual fund category.
+- Categories were pre-classified and stored as a physical column to avoid repeated classification logic.
+
+### SQL Query
+```sql
+SELECT
+    mutual_fund_category,
+    ROUND(AVG(day_change), 6) AS avg_daily_return
+FROM mutual_fund_nav
+GROUP BY mutual_fund_category
+ORDER BY avg_daily_return DESC;
+```
+<img width="397" height="566" alt="image" src="https://github.com/user-attachments/assets/eb3c53b9-437b-4c5d-b6b4-196674f5363d" />
+<img width="395" height="515" alt="image" src="https://github.com/user-attachments/assets/66e0de67-402b-4173-a16b-0e1eaa95c196" />
+Key Insights
+
+Debt-oriented categories such as Money Market, Overnight, and Liquid funds show stable average daily returns.
+
+Equity categories including Mid Cap, Flexi Cap, and Large & Mid Cap demonstrate higher growth-oriented daily returns.
+
+Hybrid funds reflect balanced performance with relatively lower daily volatility.
+
+Long-duration debt and gilt-based funds show comparatively lower average daily returns.
+
+The analysis confirms that return behavior varies significantly across fund categories, reinforcing the importance of category-wise comparison.
+
 
