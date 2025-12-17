@@ -403,7 +403,7 @@ ORDER BY performance_bucket, return_5yr_percent DESC;
 ```
 <img width="1084" height="310" alt="image" src="https://github.com/user-attachments/assets/58d63a1d-5762-4e82-9c98-20ef0a743acf" />
 
-# Q6: **Which Equity Mid Cap mutual funds performed the best and worst over the last 5 years?**
+#  **Which Equity Mid Cap mutual funds performed the best and worst over the last 5 years?**
 
 ## 🎯 Objective
 
@@ -466,7 +466,7 @@ ORDER BY performance_bucket, return_5yr_percent DESC;
 ```
 <img width="1075" height="311" alt="image" src="https://github.com/user-attachments/assets/c62a9fbe-ca51-421b-8b05-8d06a9d37228" />
 
-# Q7: **Which Equity Small Cap mutual funds performed the best and worst over the last 5 years?**
+#  **Which Equity Small Cap mutual funds performed the best and worst over the last 5 years?**
 
 ## 🎯 Objective
 
@@ -530,7 +530,7 @@ ORDER BY performance_bucket, return_5yr_percent DESC;
 <img width="1027" height="307" alt="image" src="https://github.com/user-attachments/assets/844a1e76-a311-4617-bf33-a25e1558d96e" />
 
 
-# Q8: **Which Equity Flexi Cap mutual funds performed the best and worst over the last 5 years?**
+#  **Which Equity Flexi Cap mutual funds performed the best and worst over the last 5 years?**
 
 ## 🎯 Objective
 
@@ -595,7 +595,7 @@ ORDER BY performance_bucket, return_5yr_percent DESC;
 ```
 <img width="962" height="314" alt="image" src="https://github.com/user-attachments/assets/a836b4af-ecbe-422e-9e91-12520bb39562" />
 
-# Q9: **Which Debt Liquid mutual funds performed the best and worst over the last 5 years?**
+#  **Which Debt Liquid mutual funds performed the best and worst over the last 5 years?**
 
 ## 🎯 Objective
 
@@ -727,7 +727,7 @@ ORDER BY performance_bucket, return_5yr_percent DESC;
 ```
 <img width="1064" height="309" alt="image" src="https://github.com/user-attachments/assets/08e5122f-c297-4c8a-8fad-8823dd274829" />
 
-# Q11: **Which Equity Large Cap mutual funds performed the best and worst over the last 10 years?**
+#  **Which Equity Large Cap mutual funds performed the best and worst over the last 10 years?**
 
 ## 🎯 Objective
 
@@ -792,7 +792,7 @@ ORDER BY performance_bucket, return_10yr_percent DESC;
 ```
 <img width="1091" height="313" alt="image" src="https://github.com/user-attachments/assets/3a85af07-f51b-4abf-8173-f4e7e2aebdbd" />
 
-# Q12: **Which Equity Mid Cap mutual funds performed the best and worst over the last 10 years?**
+#  **Which Equity Mid Cap mutual funds performed the best and worst over the last 10 years?**
 
 ## 🎯 Objective
 
@@ -858,7 +858,7 @@ ORDER BY performance_bucket, return_10yr_percent DESC;
 
 <img width="1070" height="310" alt="image" src="https://github.com/user-attachments/assets/9a63233a-432a-4a93-a3b3-90220201256e" />
 
-# Q13: **Which Equity Small Cap mutual funds performed the best and worst over the last 10 years?**
+#  **Which Equity Small Cap mutual funds performed the best and worst over the last 10 years?**
 
 ## 🎯 Objective
 
@@ -924,7 +924,7 @@ ORDER BY performance_bucket, return_10yr_percent DESC;
 
 <img width="1042" height="311" alt="image" src="https://github.com/user-attachments/assets/a8ed3166-06d8-4124-8abf-f8a409b7fdde" />
 
-# Q14: **Which Equity Flexi Cap mutual funds performed the best and worst over the last 10 years?**
+#  **Which Equity Flexi Cap mutual funds performed the best and worst over the last 10 years?**
 
 ## 🎯 Objective
 
@@ -991,7 +991,7 @@ ORDER BY performance_bucket, return_10yr_percent DESC;
 <img width="964" height="310" alt="image" src="https://github.com/user-attachments/assets/25773b0a-128d-4f53-b35c-f0c8210f810c" />
 
 
-# Q15: **Which Debt Liquid mutual funds performed the best and worst over the last 10 years?**
+#  **Which Debt Liquid mutual funds performed the best and worst over the last 10 years?**
 
 ## 🎯 Objective
 
@@ -1057,7 +1057,7 @@ ORDER BY performance_bucket, return_10yr_percent DESC;
 
 <img width="973" height="310" alt="image" src="https://github.com/user-attachments/assets/0b3df444-3c2e-4494-9dad-6b3b1e07606d" />
 
-# Q16: **Which Debt Corporate Bond mutual funds performed the best and worst over the last 10 years?**
+#  **Which Debt Corporate Bond mutual funds performed the best and worst over the last 10 years?**
 
 ## 🎯 Objective
 
@@ -1123,7 +1123,7 @@ ORDER BY performance_bucket, return_10yr_percent DESC;
 <img width="1262" height="310" alt="image" src="https://github.com/user-attachments/assets/21c65070-0f43-403f-871e-ac1b08d910f6" />
 
 
-## Q9: Which Equity Large Cap mutual funds performed the best and worst over the last 15 years?
+##  Which Equity Large Cap mutual funds performed the best and worst over the last 15 years?
 
 ### Objective
 Identify top and bottom performing Equity Large Cap mutual funds over a 15-year horizon to evaluate long-term wealth creation potential.
@@ -1180,7 +1180,7 @@ ORDER BY performance_bucket, return_15yr_percent DESC;
 <img width="1037" height="307" alt="image" src="https://github.com/user-attachments/assets/7ea6ac43-fb6e-46da-a500-e23bad19a7fc" />
 
 
-## Q10: Which Equity Mid Cap mutual funds performed the best and worst over the last 15 years?
+##  Which Equity Mid Cap mutual funds performed the best and worst over the last 15 years?
 
 ### Objective
 Evaluate long-term performance of Equity Mid Cap mutual funds by identifying top and bottom performers over a 15-year period.
@@ -1239,7 +1239,7 @@ ORDER BY performance_bucket, return_15yr_percent DESC;
 <img width="923" height="311" alt="image" src="https://github.com/user-attachments/assets/05b8c032-0aa1-480c-9e82-1a87b440c005" />
 
 
-## Q11: Which Equity Small Cap mutual funds performed the best and worst over the last 15 years?
+##  Which Equity Small Cap mutual funds performed the best and worst over the last 15 years?
 
 ### Objective
 Analyze long-term performance extremes within the Equity – Small Cap category over a 15-year horizon.
@@ -1296,7 +1296,7 @@ ORDER BY performance_bucket, return_15yr_percent DESC;
 <img width="1040" height="310" alt="image" src="https://github.com/user-attachments/assets/14a8c599-7f59-4381-823a-67d8eb9aa682" />
 
 
-## Q12: Which Equity Flexi Cap mutual funds performed the best and worst over the last 15 years?
+##  Which Equity Flexi Cap mutual funds performed the best and worst over the last 15 years?
 
 ### Objective
 Identify long-term top and bottom performers within the Equity – Flexi Cap category over a 15-year horizon.
@@ -1356,7 +1356,7 @@ ORDER BY performance_bucket, return_15yr_percent DESC;
 
 
 
-## Q13: Which Debt Liquid mutual funds performed the best and worst over the last 15 years?
+##  Which Debt Liquid mutual funds performed the best and worst over the last 15 years?
 
 ### Objective
 Evaluate long-term performance variation within the Debt – Liquid category over a 15-year horizon.
@@ -1413,7 +1413,7 @@ ORDER BY performance_bucket, return_15yr_percent DESC;
 <img width="1090" height="310" alt="image" src="https://github.com/user-attachments/assets/75404302-c0ac-4bae-8687-d66ff547e048" />
 
 
-## Q14: Which Debt Corporate Bond mutual funds performed the best and worst over the last 15 years?
+##  Which Debt Corporate Bond mutual funds performed the best and worst over the last 15 years?
 
 ### Objective
 Analyze long-term performance dispersion within the Debt – Corporate Bond category over a 15-year horizon.
